@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post('/add', insertSampleProducts)
 router.post('/stats', getProductStats)
-router.post('/analysis', getProductAnalysis)
+router.get('/analysis', getProductAnalysis)
 
 module.exports = router;

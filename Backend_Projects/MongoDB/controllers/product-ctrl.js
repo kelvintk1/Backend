@@ -46,9 +46,33 @@ const getProductAnalysis =  async (req, res) => {
             {
                 $match: {
                     category: "Electronics"
+                },
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalRevenue: { $sum: "$price" },
+                    avgPrice: { $avg: "$price" },
+                    maxPrice: { $max: "$price" },
+                    minPrice: { $min: "$price" }
+                }
+            },
+            {
+                $sort: { totalProducts: -1 } // Sort by totalProducts in descending order
+            },
+            {
+                $project: {
+                    _id: 0, // Exclude the _id field
+                    totalRevenue: 1,
+                    avgPrice: 1,
+                    maxPrice: 1,
+                    minPrice: 1,
+                    priceRange : {
+                        $subtract: ["$maxPrice", "$minPrice"]
+                    }
                 }
             }
-        ])
+        ]);
         res.status(200).json({
             success: true,
             data: result 
@@ -63,7 +87,7 @@ const getProductAnalysis =  async (req, res) => {
 
 const insertSampleProducts = async(req, res)=>{
     try{
-        const samplePr oducts = [
+        const sampleProducts = [
             {
                 name: "Laptop",
                 category: "Electronics",
