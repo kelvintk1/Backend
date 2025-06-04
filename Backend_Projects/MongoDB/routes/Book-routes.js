@@ -7,4 +7,4 @@ router.post('/author', createAuthor);
 router.post('/book', createBook);
 router.get('/book/:id', getBooksWithAuthor);
 
-module.exports = router;  
+module.exports = router;
